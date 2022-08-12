@@ -1,0 +1,34 @@
+'this macro is to query all from the list of company'
+'the company name maybe sorted or not but query will to arrange according to company list'
+
+
+Sub Doloop()
+
+
+Dim CompanyName As String
+Dim finalrow As Integer
+Dim i As Integer
+
+
+Sheets("Data").Range("P4:Z100").ClearContents
+ 
+
+ finalrow = Worksheets("Data").Range("A10000").End(xlUp).Row
+ 
+ For Each c In Range("J2:J11")
+    
+    For i = 2 To finalrow
+        If Cells(i, 1) = c Then
+            Range(Cells(i, 2), Cells(i, 5)).Copy
+            Range("P1000").End(xlUp).Offset(1, 0).PasteSpecial xlPasteAllMergingConditionalFormats
+        End If
+    Next i
+
+
+
+Next c
+
+Range("P2").Select
+
+End Sub
+
