@@ -1,0 +1,35 @@
+'to better understand the macro is to see the image from the folder'
+
+
+
+
+Sub finddata()
+
+'define variables'
+Dim CompanyName As String
+Dim finalrow As Integer
+Dim i As Integer
+
+'this is to clear all previous search for every new search'
+Sheets("Data").Range("O4:Z100").ClearContents
+ 
+'cell address reference condition'
+CompanyName = Worksheets("Data").Range("O2").Value
+
+'this is to match cell reference in a column-row'
+finalrow = Worksheets("Data").Range("A10000").End(xlUp).Row
+ 
+ 'finally, to loop every matched cell and copy-paste the row'
+    For i = 2 To finalrow
+        If Cells(i, 1) = CompanyName Then
+        'copy row range'
+            Range(Cells(i, 2), Cells(i, 7)).Copy
+        'paste copied row and offset 1 for each paste'
+            Range("O1000").End(xlUp).Offset(1, 0).PasteSpecial xlPasteAllMergingConditionalFormats
+        End If
+    Next i
+
+
+Range("P2").Select
+        
+End Sub
