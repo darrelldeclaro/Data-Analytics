@@ -1,0 +1,62 @@
+Sub exercise4()
+
+'insertHeaders'
+Range("A1").Value = "Our Global Company"
+Range("A2").Value = "Stock Prices"
+Range("B4").Value = ActiveSheet.Name & " Portfolio"
+Range("B6").Value = "Symbol"
+Range("C6").Value = "Open"
+Range("D6").Value = "Close"
+Range("E6").Value = "Net Change"
+
+'Format Content'
+'Header 1'
+Range("A1").Select
+With Selection.Font
+    .Name = "Arial"
+    .Size = 20
+    .Bold = True
+End With
+
+'Header 2'
+Range("A2").Select
+With Selection.Font
+    .Name = "Arial"
+    .Size = 18
+    .Bold = True
+End With
+
+'dynamic sheet name'
+Range("B4").Select
+With Selection.Font
+    .Name = "Arial"
+    .Size = 14
+    .Bold = True
+End With
+
+'table header'
+Range("B6:E6").Select
+With Selection.Font
+    .Name = "Arial"
+    .Size = 12
+    .Bold = True
+End With
+
+'format column data type to currency'
+Columns("C:E").Select
+Selection.Style = "currency"
+
+Columns("B:E").Select
+Columns("B:E").EntireColumn.AutoFit
+
+Range("E1").Select
+
+End Sub
+'currentregion method can only execute under the a public sub'
+Public Sub formatTable()
+
+Range("B6").CurrentRegion.Select
+Selection.Interior.ThemeColor = xlThemeColorDark2
+
+End Sub
+
