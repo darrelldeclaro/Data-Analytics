@@ -1,1 +1,3 @@
+Created a viz without data model or relationship
+
 https://public.tableau.com/shared/ZY98PRBPS?:display_count=n&:origin=viz_share_link
