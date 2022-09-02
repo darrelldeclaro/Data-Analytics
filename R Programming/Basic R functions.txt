@@ -1,0 +1,164 @@
+#common packages of data manipulation, exploration, and visualization
+#core package for tidyverse
+#ggplot2, tibble, tidyr, readr, purrr, dplyr, stringr, forcats
+install.packages("tidyverse")
+install.packages("palmerpenguins")
+
+
+#load packages
+library(ggplot2)
+library(palmerpenguins)
+
+summary(penguins)
+View(penguins)
+
+#ggplot is a package for visualization
+ggplot(data=penguins,aes(x=flipper_length_mm,y=body_mass_g))+
+  geom_point(aes(color=species))
+
+#variable assignment "<-"
+variable <- c(1,2,3,4,5)
+var_1 <- c(1:5)
+
+
+#ToothGrowth exploration
+data('ToothGrowth')
+View(ToothGrowth)
+
+filter_tg<-filter(ToothGrowth,dose==0.5)
+
+arrange(filter_tg,len)
+
+#nested function
+arrange(filter(ToothGrowth,dose==0.5),len)
+
+#using pipe %>% 
+filtered_tg<-ToothGrowth %>% 
+  filter(dose==0.5) %>% 
+  arrange(len)
+
+filtered_tg<-ToothGrowth %>% 
+  filter(dose==0.5) %>% 
+  group_by(supp) %>% 
+  summarize(mean_len = mean(len,na.rm = T),.group="drop")
+
+#using diamonds dataset exploring data frame
+data("diamonds")
+View(diamonds)
+
+#preview 
+Head(diamonds)
+
+#structure of the data
+str(diamonds)
+
+#view column names 
+colnames(diamonds)
+
+#add new column using mutate()
+mutate(diamonds,carat2=carat*100)
+
+
+#DATA CLEANING
+install.packages("here")
+install.packages("skimr")
+install.packages("janitor")
+install.packages("dplyr")
+
+library(dplyr)
+library(here)
+library(skimr)
+library(janitor)
+
+skim_without_charts()
+glimpse()
+head()
+
+penguins %>% 
+  select(-species)
+
+penguins %>% 
+  rename(columnName_new=columnName)
+
+#rename column to uppercase(toupper) or lowercase(tolower)
+rename_with(data,toupper)
+
+clean_names(data)
+
+
+##ORGANIZING DATA
+penguins %>% 
+  arrange(-bill_length_mm)
+
+penguins %>% 
+  group_by(islands) %>% 
+  drop_na() %>% 
+  summarize(mean_bill_length_mm = mean(bill_length_mm))
+
+penguins %>% 
+  group_by(islands) %>% 
+  drop_na() %>% 
+  summarize(max_bill_length_mm = max(bill_length_mm))
+
+penguins %>% 
+  group_by(islands) %>% 
+  drop_na() %>% 
+  summarize(mean_bill_length_mm = mean(bill_length_mm), max_bill_length_mm = max(bill_length_mm))
+
+
+#TRANSFORM DATA
+install.packages("tidyverse")
+library(tidyverse)
+id<-c(1:4)
+fullName<-c("Sophia Claire","Alissandra Louise","Lorenzo Faust","Eugenio Jaoquin")
+position<-c("First","second","third","fourth")
+
+children<-data.frame(id,fullName,position)
+print(children)
+
+separate(children, fullName, into=c('firstName','LastName'),sep=' ')
+
+firstName<-c("Sophia","Alissandra","Lorenzo","Eugenio")
+lastName<-c("Claire","Louise","Faust","Jaoquin")
+
+children<-data.frame(id,firstName,lastName,position)
+print(children)
+
+unite(children, 'full_Name', firstName, lastName, sep=' ')
+
+#mutate()
+penguins %>% 
+  mutate(bill_length_mm/1000,bill_depth_mm/1000)
+
+#same data with different outcome
+install.packages("Tmisc")
+library(Tmisc)
+data(quartet)
+View(quartet)
+
+quartet %>% 
+  group_by(set) %>% 
+  summarize(mean(x),sd(x),mean(y),sd(y),cor(x,y))
+
+ggplot(quartet,aes(x,y)) + geom_point() + geom_smooth(method = lm, se=FALSE) + facet_wrap(~set)
+
+install.packages("datasauRus")
+library(datasauRus)
+
+ggplot(datasaurus_dozen,aes(x=x,y=y,colour=dataset)) + geom_point() + theme_void() + theme(legend.position = "none") + facet_wrap(~dataset,ncol=3)
+
+#ggplot geom_ + aesthetic
+#using palmer penguins
+
+install.packages("tidyverse")
+install.packages("palmerpenguins")
+library(tidyverse)
+library(palmerpenguins)
+
+ggplot(data = penguins) + geom_point(mapping = aes(x = flipper_length_mm, y = body_mass_g))
+
+ggplot(data = penguins) + geom_point(mapping = aes(x = flipper_length_mm, y = body_mass_g, color=species))
+
+ggplot(data = penguins) + geom_point(mapping = aes(x = flipper_length_mm, y = body_mass_g, shape=species, color=species))
+
+ggplot(data = penguins) + geom_point(mapping = aes(x = flipper_length_mm, y = body_mass_g, shape=species), color="purple")
