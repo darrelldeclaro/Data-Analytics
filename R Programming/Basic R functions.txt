@@ -162,3 +162,21 @@ ggplot(data = penguins) + geom_point(mapping = aes(x = flipper_length_mm, y = bo
 ggplot(data = penguins) + geom_point(mapping = aes(x = flipper_length_mm, y = body_mass_g, shape=species, color=species))
 
 ggplot(data = penguins) + geom_point(mapping = aes(x = flipper_length_mm, y = body_mass_g, shape=species), color="purple")
+
+
+#USING facets
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) + geom_point(aes(color=species)) + facet_wrap(~species)
+
+#ideal for correlation of 2 group
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) + geom_point(aes(color=species)) + facet_grid(sex~species)
+
+
+#Adding Annotation and Labels(titles, subtitles, and caption)
+ggplot(data = penguins) + geom_point(mapping = aes(x = flipper_length_mm, y = body_mass_g, shape=species, color=species)) +
+  labs(title="Palmer Penguins: Body mass vs Flipper length", subtitle="Sample of three Penguin species", caption="Data colleted by Dr. Kristen Gorman") + 
+  annotation("text", x=200, y=3500, label="the gentos are the largest", color="purple", fontface="bold", size=4, angle="OPTIONAL")
+
+
+
+
+
