@@ -1,0 +1,46 @@
+---
+title: "ggplot_Palmer Penguins"
+author: "Darrell D"
+date: "2022-09-02"
+output: html_document
+---
+
+## Setting up my environment
+Notes: Setting up my R environment by loading and installing packages tidyverse and palmerpegnuins
+
+```{r loading packages}
+install.packages("tidyverse")
+install.packages("palmerpenguins")
+library(tidyverse)
+library(palmerpenguins)
+```
+
+## Visualization
+Here we will go thtough series of visualization
+
+## Flipper and body mass in purple
+We plot Flipper length and Body mass in color
+
+```{r viz flipper vs body mass in purple}
+ggplot(data=penguins, aes(x=flipper_length_mm,y=body_mass_g)) + 
+  geom_point(color="purple")
+```
+
+## Flipper and body mass by Species
+We Plot Flipper length and Body mass by Species
+
+```{r by species}
+ggplot(data=penguins, aes(x=flipper_length_mm,y=body_mass_g)) + 
+  geom_point(aes(shapes=species))
+```
+
+## Flipper and body mass by sex and species
+We plot Flipper length and Body mass by Sex and Species
+
+```{r by species and sex}
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) + 
+  geom_point(aes(color=species)) + 
+  facet_grid(sex~species)
+
+```
+
