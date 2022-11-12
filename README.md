@@ -9,3 +9,5 @@ how to visualize and present data findings in dashboards, presentations and comm
 Each Folder is a case study with the use of different tools for cleaning and aggregating, data analysis, and visualization. 
 Microsoft Excel folder is a colections of methods and techniques on how I use advance function and VBA scripts.
 Dataset are included for your reference and also can be found from kaggle.com and google dataset search.
+
+![image](https://user-images.githubusercontent.com/70382462/201458225-a1a5f67d-c414-4e17-a0e6-92708825b85a.png)
