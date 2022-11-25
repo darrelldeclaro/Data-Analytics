@@ -1,0 +1,22 @@
+Option Explicit
+
+Function FILTERVALUES(DataRange As Range) As Variant
+
+Dim cell As Range
+Dim dataDict As Scripting.Dictionary
+Dim dataArray() As Variant
+
+Set dataDict = New Scripting.Dictionary
+
+For Each cell In DataRange
+    If Not dataDict.Exists(cell.Value) Then
+        dataDict.Add cell.Value, cell.Value
+    End If
+Next cell
+
+dataArray = dataDict.Keys
+
+UNIQUEVALUES = dataArray
+
+End Function
+
