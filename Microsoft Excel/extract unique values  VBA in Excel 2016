@@ -1,6 +1,6 @@
 Option Explicit
 
-Function FILTERVALUES(DataRange As Range) As Variant
+Function UNIQUEVALUES(DataRange As Range) As Variant
 
 Dim cell As Range
 Dim dataDict As Scripting.Dictionary
