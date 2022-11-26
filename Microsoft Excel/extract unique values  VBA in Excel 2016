@@ -1,6 +1,6 @@
 Option Explicit
 
-Function UNIQUEVALUES(DataRange As Range) As Variant
+Function FILTERUNIQUEVALUES(DataRange As Range) As Variant
 
 Dim cell As Range
 Dim dataDict As Scripting.Dictionary
@@ -20,3 +20,4 @@ UNIQUEVALUES = dataArray
 
 End Function
 
+'SelectedCell - ganiton ni nato ug suway"
