@@ -1,0 +1,66 @@
+Sub autofill()
+Dim selection1 As Range
+Dim selection2 As Range
+Dim selection3 As Range
+Dim selection4 As Range
+Dim lastrow As Long
+
+lastrow = Cells(Rows.Count, 1).End(xlUp).Row
+
+Range("B:C").Insert
+Range("B1") = "ord"
+Range("C1") = "xty"
+Range("B2") = 1
+Range("B3") = 2
+
+
+'column ORD
+Set selection1 = Range("B2:B3")
+Set selection2 = Range("B2:B" & lastrow)
+
+selection1.autofill Destination:=selection2
+
+'Ascending
+ActiveWorkbook.Worksheets("Sheet1").Sort.SortFields.Clear
+ActiveWorkbook.Worksheets("Sheet1").Sort.SortFields.Add2 _
+    Key:=Range("A1"), SortOn:=xlSortOnValues, _
+    Order:=xlAscending, DataOption:=xlSortNormal
+
+With ActiveWorkbook.Worksheets("Sheet1").Sort
+    .SetRange Range("A1:D" & lastrow)
+    .Header = xlYes
+    .MatchCase = False
+    .Orientation = xlTopToBottom
+    .SortMethod = xlPinYin
+    .Apply
+End With
+
+
+
+'column XTY
+Range("C2").Formula2R1C1 = "=IF(RC[-2]=R[1]C[-2],1,""x"")"
+
+Set selection3 = Range("C2")
+Set selection4 = Range("C2:C" & lastrow)
+
+selection3.autofill Destination:=selection4
+
+'Ascending
+ActiveWorkbook.Worksheets("Sheet1").Sort.SortFields.Clear
+ActiveWorkbook.Worksheets("Sheet1").Sort.SortFields.Add2 _
+    Key:=Range("C1"), SortOn:=xlSortOnValues, _
+    Order:=xlAscending, DataOption:=xlSortNormal
+
+With ActiveWorkbook.Worksheets("Sheet1").Sort
+    .SetRange Range("C1:D" & lastrow)
+    .Header = xlYes
+    .MatchCase = False
+    .Orientation = xlTopToBottom
+    .SortMethod = xlPinYin
+    .Apply
+End With
+
+'filtering
+
+
+End Sub
