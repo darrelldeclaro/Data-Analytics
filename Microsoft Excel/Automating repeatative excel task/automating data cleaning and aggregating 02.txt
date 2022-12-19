@@ -78,10 +78,10 @@ Dim rng As Range
 Dim selection1 As Range
 Dim selection2 As Range
 
-Workbooks.Open ("C:\Users\darrell.declaro\Documents\Automation ver1.0\ASP - BAL Printing\Raw Data\ASP BAL Printing - For SLA Computation.xlsx")
+Workbooks.Open ("destination.xlsx")
 
-Set src = Workbooks("ASP BAL Printing - For SLA Computation.xlsx").Worksheets(1)
-Set dst = Workbooks("BAL Printing Combined (PBI).xlsx").Worksheets(6)
+Set src = Workbooks(source).Worksheets(1)
+Set dst = Workbooks(destination).Worksheets(6)
 Set tckId = src.Range("A3")
 Set location = dst.Range("A:A").Find(tckId)
 
@@ -99,8 +99,6 @@ Set selection2 = dst.Range("I2:W" & lastrow)
 selection1.autofill Destination:=selection2
 
 
-Workbooks("ASP BAL Printing - For SLA Computation.xlsx").Close savechanges:=False
-
 End Sub
 
 
@@ -113,10 +111,10 @@ Dim dst3 As Worksheet
 Dim srclastrow As Long
 
 
-Set src = Workbooks("BAL Printing Combined (PBI).xlsx").Worksheets(4)
-Set dst1 = Workbooks("BAL Printing Combined (PBI).xlsx").Worksheets(1)
-Set dst2 = Workbooks("BAL Printing Combined (PBI).xlsx").Worksheets(2)
-Set dst3 = Workbooks("BAL Printing Combined (PBI).xlsx").Worksheets(3)
+Set src = Workbooks(source).Worksheets(4)
+Set dst1 = Workbooks(destination1).Worksheets(1)
+Set dst2 = Workbooks(destination2).Worksheets(2)
+Set dst3 = Workbooks(destination3).Worksheets(3)
 
 ActiveWorkbook.RefreshAll
 
@@ -156,8 +154,8 @@ Dim selection1 As Range
 Dim selection2 As Range
 
 
-Set src = Workbooks("BAL Printing Combined (PBI).xlsx").Worksheets(4)
-Set dst1 = Workbooks("BAL Printing Combined (PBI).xlsx").Worksheets(1)
+Set src = Workbooks(source).Worksheets(4)
+Set dst1 = Workbooks(destination).Worksheets(1)
 
 
 ActiveWorkbook.RefreshAll
@@ -203,8 +201,8 @@ Dim selection1 As Range
 Dim selection2 As Range
 
 
-Set src = Workbooks("BAL Printing Combined (PBI).xlsx").Worksheets(4)
-Set dst1 = Workbooks("BAL Printing Combined (PBI).xlsx").Worksheets(2)
+Set src = Workbooks(source).Worksheets(4)
+Set dst1 = Workbooks(destination).Worksheets(2)
 
 ActiveWorkbook.RefreshAll
 
@@ -250,8 +248,8 @@ Dim selection1 As Range
 Dim selection2 As Range
 
 
-Set src = Workbooks("BAL Printing Combined (PBI).xlsx").Worksheets(4)
-Set dst1 = Workbooks("BAL Printing Combined (PBI).xlsx").Worksheets(3)
+Set src = Workbooks(source).Worksheets(4)
+Set dst1 = Workbooks(destination).Worksheets(3)
 
 ActiveWorkbook.RefreshAll
 
@@ -280,7 +278,7 @@ Set selection1 = dst1.Range("U2:V2")
 Set selection2 = dst1.Range("U2:V" & dstlastrow1b)
 selection1.autofill Destination:=selection2
 
-'Workbooks("BAL Printing Combined (PBI).xlsx").Close savechanges:=True
+
 
 End Sub
 
