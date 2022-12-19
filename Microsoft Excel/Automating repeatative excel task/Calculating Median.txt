@@ -1,0 +1,37 @@
+CREATE TABLE Company (
+	[Company Name] varchar(100),
+  	Revenue int  
+)
+
+
+DROP TABLE Company
+
+INSERT INTO Company ([Company Name], Revenue)
+VALUES 
+	('CompanyA', 5600),
+	('CompanyA', 8000),
+    (CompanyA, 1500),
+    (CompanyA, 2300),
+    (CompanyA, 6000),
+    (CompanyA, 7500),
+    (CompanyB, 1200),
+    (CompanyB, 3000),
+    (CompanyB, 4000),
+    (CompanyB, 9000),
+    (CompanyB, 3000),
+    (CompanyC, 7500),
+    (CompanyC, 5600),
+    (CompanyC, 5600),
+    (CompanyC, 4000),
+    (CompanyC, 4000),
+    (CompanyC, 4000),
+    (CompanyC, 1200),
+    (CompanyC, 800),
+    (CompanyC, 5600)
+
+
+
+
+SELECT *, Percentile_cont(.5) Within group (order by Revenue) over() Medial
+FROM Company
+WHERE [Company Name] = 'CompanyA'

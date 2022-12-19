@@ -1,0 +1,15 @@
+'remove column contents'
+wsDst.columns(6).clearcontents
+wsDst.columns(7).clearcontents
+wsDst.columns(8).clearcontents
+wsDst.columns(10).clearcontents
+wsDst.columns(11).clearcontents
+wsDst.columns(13).clearcontents
+
+'re-assgning header names'
+range(1,6).value = "LastUpdatedRelative"
+range(1,7).value = "Take"
+range(1,8).value = "Priority"
+range(1,10).value = "CreatedRelative"
+range(1,11).value = "ToldRelative"
+range(1,13).value = "Open"

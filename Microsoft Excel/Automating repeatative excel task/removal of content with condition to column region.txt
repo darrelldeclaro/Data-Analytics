@@ -1,0 +1,12 @@
+'removal of column content in "red" font'
+Dim rng As Range
+
+Range("F2").Select
+Selection.End(xlDown).Select
+
+Set rng = [F:M]
+For Each Cell In rng
+ If Cell.Font.ColorIndex = 3 Then
+  Cell.ClearContents
+ End If
+Next Cell

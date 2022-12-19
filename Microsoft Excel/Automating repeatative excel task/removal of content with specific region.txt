@@ -1,0 +1,18 @@
+'removal of column content in "red" font'
+Dim rng As Range
+    
+Set rng = Range(Selection, Selection.End(xlDown)).CurrentRegion
+
+Range("F2").Select
+rng.Range(Selection, Selection.End(xlDown)).Select
+rng.Range(Selection, Selection.End(xlToRight).Offset(, -4)).Select
+
+'check correct region selected
+'MsgBox selection.Address
+       
+Set rng = Range(Selection.Address)
+    For Each Cell In rng
+        If Cell.Font.ColorIndex = 3 Then
+        Cell.ClearContents
+    End If
+Next Cell
