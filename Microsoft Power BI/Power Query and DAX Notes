@@ -1,0 +1,111 @@
+
+
+Aggregating row:
+#"Pivoted Column"
+#"Row Total" = Table.AddColumn(#"Pivoted Column","Sum", each List.Sum(List.Range(Record.ToList(_),3,Table.ColumnCount(#"Pivoted Column")-3))),
+    #"Row Count" = Table.AddColumn(#"Row Total", "Count", each List.NonNullCount(List.Range(Record.ToList(_),3,Table.ColumnCount(#"Pivoted Column")-3))),
+    #"Added Custom1" = Table.AddColumn(#"Row Count", "avg", each [Sum]/[Count])
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Creating a generic Time table:
+	{#duration([day],[hour],[minutes],[seconds])}
+let
+    Source = List.Times(#time(0,0,0),24*60*60,#duration(0,1,0,0)),
+    #"Converted to Table" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+    #"Renamed Columns" = Table.RenameColumns(#"Converted to Table",{{"Column1", "Time (UTC)"}}),
+    #"Removed Duplicates" = Table.Distinct(#"Renamed Columns"),
+    #"Added Custom" = Table.AddColumn(#"Removed Duplicates", "Creation Hour ( UTC | PH )", each Time.ToText([#"Time (UTC)"]) & " | " & 
+Time.ToText([#"Time (UTC)"] + #duration(0,8,0,0)))
+in
+    #"Added Custom"
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Adding hour to datetime:
+	[datetime column] + #duration([day],[hour],[minutes],[seconds])
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Concatenating date/datetime:
+	Function:
+		Date.ToText()
+		DateTime.ToText()
+		Time.ToText()
+	Format: “dd/MM/yyyy”
+	Note: power query do not use concatenate function. Combining date/datetime with text will result an error. 
+	To prevent from getting an error then date/datetime will be change to text.
+Example:		
+	Date.ToText(Date.From([Task Completion Date]),"yyyy") &
+	“_” &
+Date.ToText(Date.From([Task Completion Date]),"MM")
+
+ Result:
+	2021_01
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Contain a string:
+DAX: Custom test = CALCULATE(CONTAINSSTRING(MAX('All Data'[Cost Recovery Original column]),"Slaughter"))
+Power query: Text.Contains([column],[string])
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Removing duplicate (retaining new):
+    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Changed Type",{{"#", Order.Descending}})),
+    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"#", "Created Date/Time", "Resolved Date/Time"}),
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Format Date: 
+
+Source:
+  Month  |  Day  |  Year
+  Feb        1      2019
+
+Power query function:
+ formatDateTime('01-Feb-2010','MM')
+
+Result:
+02
+number equivalent of month
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Distinct count of multiple columns:
+Average creation per week day = 
+var distc = CALCULATE(
+                COUNTROWS(
+                    SUMMARIZE('Dim intraday creation','Dim intraday creation'[Task Creation Date],'Dim intraday creation'[Day Name])
+                ), 'Dim tck by creation'[Task Creation Date])
+var suma = SUM('Dim intraday creation'[total])
+
+return
+suma / distc
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Removing duplicates retaining the latest data:
+
+#”Sorted RoTable.Buffer(Table.Sort(#” Previous task “, {{column, sort order}}))
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Counting Duplicates:
+When using GroupBy function this will automatically remove other columns with the unique count 
+However this process allows you to reference the original applied steps with the duplicate count column.
+
+Power Query:
+    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom1",{{"No. of Orders", Int64.Type}}),
+    #"Duplicated Column1" = Table.DuplicateColumn(#"Changed Type2", "Tracking number", "Tracking number - Copy"),
+    #"Grouped Rows" = Table.Group(#"Duplicated Column1", {"Tracking number - Copy"}, {{"Count", each Table.RowCount(_), Int64.Type}}),
+    #"Merged Queries3" = Table.NestedJoin(#"Duplicated Column1",{"Tracking number - Copy"},#"Grouped Rows",{"Tracking number - Copy"},"Grouped Rows",JoinKind.LeftOuter),
+    #"Exp Grouped Rows" = Table.ExpandTableColumn(#"Merged Queries3","Grouped Rows",{"Count"},{"DUplicate Count"})
+in
+    #"Exp Grouped Rows"
+
+
+
+
+
